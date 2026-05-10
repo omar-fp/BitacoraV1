@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="10">
+
+    <TextView
+        android:id="@+id/tvFilaDia"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="#F2F2F2"
+        android:gravity="center_horizontal"
+        android:padding="8dp"
+        android:text="Fecha"
+        android:textColor="#333333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tvFilaMovimiento"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:layout_marginHorizontal="2dp"
+        android:background="#F2F2F2"
+        android:minHeight="50dp"
+        android:padding="8dp"
+        android:text=" Nombre del Articulo"
+        android:textColor="#333333"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tvFilaMonto"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:background="#F2F2F2"
+        android:gravity="end"
+        android:padding="8dp"
+        android:text="000.00"
+        android:textColor="#333333"
+        android:textSize="13sp" />
+
+</LinearLayout>
