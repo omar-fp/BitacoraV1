@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/fondo_pantalla">
 
     <Button
         android:id="@+id/btnSalir"
@@ -13,9 +14,9 @@
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="96dp"
-        android:backgroundTint="#E0E0E0"
+        app:backgroundTint="@color/fondo_botones"
         android:text="Salir"
-        android:textColor="#333333"
+        android:textColor="@color/texto_principal"
         app:cornerRadius="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,39 +37,27 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="168dp"
+        android:elevation="6dp"
+        android:theme="@style/ThemeOverlay.AppCompat.DayNight"
+        android:background="@drawable/fondo_calendario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.781"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnReporteMensual"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="#E0E0E0"
-        android:text="Reporte Mensual"
-        android:textColor="@color/black"
-        app:cornerRadius="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/calendarView" />
-
-
-    <Button
         android:id="@+id/btnTodosLosReportes"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="#E0E0E0"
+        android:layout_marginTop="56dp"
+        app:backgroundTint="@color/fondo_botones"
         android:text="Todos los Reportes"
-        android:textColor="@color/black"
+        android:textColor="@color/texto_principal"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnReporteMensual" />
+        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
     <TextView
         android:layout_width="200dp"
@@ -76,6 +65,7 @@
         android:layout_marginBottom="16dp"
         android:alpha="0.4"
         android:text="Registra los gastos del día a dia y lleva un control de tus gastos mensuales"
+        android:textColor="@color/texto_principal"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

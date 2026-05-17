@@ -3,6 +3,7 @@ package com.example.bitacorav1
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,8 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
-import java.util.Calendar
-import java.util.Locale
 
 class reporte_mensual : AppCompatActivity() {
 
@@ -29,19 +28,16 @@ class reporte_mensual : AppCompatActivity() {
         }
 
         val btnAtras = findViewById<Button>(R.id.btnAtrasReporte)
-        btnAtras.setOnClickListener {
-            finish()
-        }
+        btnAtras.setOnClickListener { finish() }
+
+        val nombreMesActual = intent.getStringExtra("MES_ELEGIDO") ?: ""
+        val tituloCompleto = intent.getStringExtra("TITULO_COMPLETO") ?: "MES - AÑO"
 
         val tvTitulo = findViewById<TextView>(R.id.tvTituloReporte)
-        val calendario = Calendar.getInstance()
-        val nombreMesActual =
-            calendario.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale("es", "ES"))
-                ?.uppercase() ?: "MES"
-        tvTitulo.text = "REPORTE DEL\nMES DE $nombreMesActual"
+        tvTitulo.text = "REPORTE DEL\n$tituloCompleto"
 
         val rvReporte = findViewById<RecyclerView>(R.id.rvDetalleMensual)
-        adapter = ReporteMensualAdapter(emptyList()) // Inicia vacía
+        adapter = ReporteMensualAdapter(emptyList())
         rvReporte.layoutManager = LinearLayoutManager(this)
         rvReporte.adapter = adapter
 
@@ -49,17 +45,24 @@ class reporte_mensual : AppCompatActivity() {
         val gastoDao = db.gastoDao()
 
         lifecycleScope.launch {
-            val gastosMes = gastoDao.obtenerGastosPorMes(nombreMesActual)
-            adapter.actualizarLista(gastosMes)
+            if (nombreMesActual.isNotEmpty()) {
+                val gastosMes = gastoDao.obtenerGastosPorMes(nombreMesActual)
+                val gastosOrdenados = gastosMes.sortedBy { gasto ->
+                    Regex("\\d+").find(gasto.fecha)?.value?.toIntOrNull() ?: 0
+                }
 
-            var sumaTotal = 0.0
-            for (gasto in gastosMes) {
-                sumaTotal += gasto.monto
+                adapter.actualizarLista(gastosOrdenados)
+
+                var sumaTotal = 0.0
+                for (gasto in gastosOrdenados) {
+                    sumaTotal += gasto.monto
+                }
+
+                val tvMontoTotal = findViewById<TextView>(R.id.tvMontoTotal)
+                tvMontoTotal.text = String.format("$%.2f", sumaTotal)
+            } else {
+                Toast.makeText(this@reporte_mensual, "Error al cargar el mes seleccionado", Toast.LENGTH_SHORT).show()
             }
-
-            // Pinta la cantidad final en el recuadro gris
-            val tvMontoTotal = findViewById<TextView>(R.id.tvMontoTotal)
-            tvMontoTotal.text = String.format("$%.2f", sumaTotal)
         }
     }
 }

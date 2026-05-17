@@ -8,7 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import kotlin.jvm.java
 import androidx.appcompat.app.AlertDialog
 
 class MainActivity : AppCompatActivity() {
@@ -24,19 +23,12 @@ class MainActivity : AppCompatActivity() {
         val btnSalir = findViewById<Button>(R.id.btnSalir)
         val calendarView = findViewById<CalendarView>(R.id.calendarView)
         val btnVerReportes = findViewById<Button>(R.id.btnTodosLosReportes)
-        val btnMensual = findViewById<Button>(R.id.btnReporteMensual)
         var fechaSeleccionada = ""
 
         btnVerReportes.setOnClickListener {
             val intent = Intent(this, reportes::class.java)
             startActivity(intent)
         }
-
-        btnMensual.setOnClickListener {
-            val intent = Intent(this, reporte_mensual::class.java)
-            startActivity(intent)
-        }
-
 
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
 
@@ -54,7 +46,6 @@ class MainActivity : AppCompatActivity() {
                 "NOVIEMBRE",
                 "DICIEMBRE")
             val mesNombre = meses[month]
-
             val diaFormateado = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
 
             fechaSeleccionada = "$diaFormateado - $mesNombre -$year"
@@ -63,6 +54,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("FECHA_ELEGIDA", fechaSeleccionada)
             startActivity(intent)
         }
+
         btnSalir.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Salir")
